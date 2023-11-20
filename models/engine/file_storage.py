@@ -10,13 +10,12 @@ class FileStorage:
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
-        if not cls:
+        if cls is None:
             return FileStorage.__objects
         new_dict = {}
-        for key in FileStorage.__objects.keys():
-            cls_name = eval(key.split(".")[0])
-            if cls == cls_name:
-                new_dict[key] = FileStorage.__objects[key]
+        for key, value in self.__objects.items():
+            if cls is type(value):
+                new_dict[key] = self.__objects[key]
         return new_dict
 
     def new(self, obj):
@@ -31,17 +30,6 @@ class FileStorage:
             for key, val in temp.items():
                 temp[key] = val.to_dict()
             json.dump(temp, f)
-
-    def import_classes(self):
-        """just imports classes"""
-        from models.base_model import BaseModel
-        from models.user import User
-        from models.place import Place
-        from models.state import State
-        from models.city import City
-        from models.amenity import Amenity
-        from models.review import Review
-        return BaseModel, User, Place, State, City, Amenity, Review
 
     def reload(self):
         """Loads storage dictionary from file"""
