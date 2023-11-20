@@ -13,12 +13,6 @@ class FileStorage:
         BaseModel, User, Place, State, City, Amenity, Review = self.import_classes()
         if not cls:
             return FileStorage.__objects
-        new_dict = {}
-        for key in FileStorage.__objects.keys():
-            cls_name = eval(key.split(".")[0])
-            if cls == cls_name:
-                new_dict[key] = FileStorage.__objects[key]
-        return new_dict
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
