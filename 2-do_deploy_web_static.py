@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
-script (based on the file 1-pack_web_static.py) that distributes
-an archive to your web servers
+Its a python script that creates and distributes an
+archive to your web servers, using the function deploy
 """
 
 from fabric.api import put, env, run
