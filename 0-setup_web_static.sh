@@ -9,7 +9,7 @@ fi
 
 # folders and files to be created
 folders=(  "/data/web_static/releases/test/" "/data/web_static/shared/" )
-files="/data/web_static/releases/test/index.html"
+file="/data/web_static/releases/test/index.html"
 
 # check if folders already exist and create if non existent
 mkdir -p ${folders[0]}
