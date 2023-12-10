@@ -1,37 +1,37 @@
 #!/usr/bin/python3
-"""a Fabric script (based on the file 1-pack_web_static.py)
-    that distributes an archive to your web servers,
-    using the function do_deploy
+"""
+script (based on the file 1-pack_web_static.py) that distributes
+an archive to your web servers
 """
 
+from fabric.api import put, env, run
 import os
-from fabric.api import run, env, put
 
 env.hosts = ['18.209.225.36', '52.87.234.219']
 
 
 def do_deploy(archive_path):
-    """distributes an archive to webservers"""
+    """distributes files(archive) to my webservers"""
 
     if not os.path.exists(archive_path):
         return False
-
     try:
         put(archive_path, '/tmp/')
-        ext_filename = archive_path.split('/')[-1]
-        filename = ext_filename.split('.')[0]
+        ext_file = archive_path.split("/")[-1]
+        filename = ext_file.split(".")[0]
+        run('mkdir -p /data/web_static/releases/{}'.format(filename))
+        run('tar -xzf /tmp/{} -C /data/web_static/releases/{}'.format
+            (ext_file, filename))
+        run('rm /tmp/{}'.format(ext_file))
+        run('mv /data/web_static/releases/{}/web_static/* \
+            /data/web_static/releases/{}/'.format(filename, filename))
+        run('rm -rf /data/web_static/releases/{}/web_static'
+            .format(filename))
+        run('rm -rf /data/web_static/current')
+        run('ln -s /data/web_static/releases/{} /data/web_static/current'
+            .format(filename))
 
-        run f'mkdir -p /data/web_static/releases/{filename}'
-        run 'tar -xzf /tmp/{} -C /data/web_static/releases/{}'
-        .format(ext_filename, filename)
-        run f'rm /tmp/{ext_filename}'
-        move = "mv /data/web_static/releases/{}/web_static/* /data/web_static/
-        releases/{}/".format(filename, filename)
-        run move
-        run f'rm -rf /data/web_static/releases/{filename}/web_static'
-        run 'rm -rf /data/web_static/current'
-        run f'ln -s /data/web_static/releases/{filename}
-        /data/web_static/current'
         return True
+
     except Exception:
         return False
