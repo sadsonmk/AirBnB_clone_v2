@@ -9,22 +9,15 @@ fi
 
 # folders and files to be created
 folders=(  "/data/web_static/releases/test/" "/data/web_static/shared/" )
-files=( "/data/web_static/releases/test/index.html" )
+files="/data/web_static/releases/test/index.html"
 
 # check if folders already exist and create if non existent
-for folder in "${folders[@]}"; do
-	if [[ ! -d "$folder" ]]; then
-		mkdir -p "$folder"
-	fi
-done
+mkdir -p ${folders[0]}
+mkdir -p ${folders[1]}
 
 # check if files exist and create if they don't exist
-for file in "${files[@]}"; do
-	if [[ ! -f "$file" ]]; then
-		touch "$file"
-		echo "<h1>Testing My website</h1>" >> "$file"
-	fi
-done
+touch "$file"
+echo "<h1>Testing My website</h1>" >> "$file"
 
 # symbolic links
 link_to="/data/web_static/releases/test/"
