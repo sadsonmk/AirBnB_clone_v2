@@ -20,7 +20,7 @@ ln -sf /data/web_static/releases/test/ /data/web_static/current
 
 # change ownership and group ownership to ubuntu and give privileges
 sudo chown -R ubuntu:ubuntu /data/
-sudo chown -R 755 /data/
+sudo chmod -R 755 /data/
 # update the nginx configuration to serve content to hbnb_static
 sudo sed -i '48i \\t location /hbnb_static/ {\n\talias /data/web_static/current/;\n}\n' /etc/nginx/sites-available/default
 # restart nginx
