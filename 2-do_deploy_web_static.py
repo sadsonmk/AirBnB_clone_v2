@@ -21,17 +21,17 @@ def do_deploy(archive_path):
         ext_filename = archive_path.split('/')[-1]
         filename = ext_filename.split('.')[0]
 
-        run(f'mkdir -p /data/web_static/releases/{filename}')
-        run(f'tar -xzf /tmp/{ext_filename} -C
-            /data/web_static/releases/{filename}')
-        run(f'rm /tmp/{ext_filename}')
-
-        run(f'mv /data/web_static/releases/{filename}/web_static/*
-            /data/web_static/releases/{filename}/')
-        run(f'rm -rf /data/web_static/releases/{filename}/web_static')
-        run('rm -rf /data/web_static/current')
-        run(f'ln -s /data/web_static/releases/{filename}/
-            /data/web_static/current')
+        run f'mkdir -p /data/web_static/releases/{filename}'
+        run 'tar -xzf /tmp/{} -C /data/web_static/releases/{}'
+        .format(ext_filename, filename)
+        run f'rm /tmp/{ext_filename}'
+        move = "mv /data/web_static/releases/{}/web_static/* /data/web_static/
+        releases/{}/".format(filename, filename)
+        run move
+        run f'rm -rf /data/web_static/releases/{filename}/web_static'
+        run 'rm -rf /data/web_static/current'
+        run f'ln -s /data/web_static/releases/{filename}
+        /data/web_static/current'
         return True
-    except:
+    except Exception:
         return False

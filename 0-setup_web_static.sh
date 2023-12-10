@@ -30,13 +30,8 @@ done
 link_to="/data/web_static/releases/test/"
 sym_link="/data/web_static/current"
 
-# delete the symbolic link if it exists
-if [[ -L "$sym_link" ]]; then
-	rm -f "$sym_link"
-fi
-
-# recreate the symbolic link
-ln -s "$link_to" "$sym_link"
+# recreates a symbolic link and -f forces overwriting if another link exists
+ln -sf "$link_to" "$sym_link"
 
 # change ownership and group ownership to ubuntu and give privileges
 sudo chown -R ubuntu:ubuntu /data/
