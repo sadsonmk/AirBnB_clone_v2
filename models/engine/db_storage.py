@@ -74,3 +74,7 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
 
         self.__session = Session(bind=self.__engine)
+
+    def close(self):
+        """call remove() method on the private session attribute"""
+        self.__session.remove()
